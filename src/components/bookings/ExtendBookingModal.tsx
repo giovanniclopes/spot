@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/lib/supabase";
-import { generateTimeSlots, getSlotIndex, END_TIME } from "@/lib/timeline";
+import { generateTimeSlots, END_TIME } from "@/lib/timeline";
 import { validateRoomAvailability } from "@/lib/bookingValidation";
 import { toast } from "sonner";
 import type { Booking } from "@/types/database";
@@ -47,7 +47,6 @@ export function ExtendBookingModal({
   const slots = generateTimeSlots();
   const currentEndTime = new Date(booking.end_time);
   const currentEndTimeStr = format(currentEndTime, "HH:mm");
-  const currentEndSlot = getSlotIndex(currentEndTimeStr);
 
   useEffect(() => {
     if (open) {
