@@ -139,7 +139,7 @@ export function Navbar() {
                   variant="ghost"
                   className="relative h-11 w-11 rounded-full hover:ring-2 hover:ring-primary/20 transition-all"
                 >
-                  <Avatar className="h-11 w-11 border-2 border-card shadow-card">
+                  <Avatar className="h-11 w-11 shadow-card">
                     <AvatarImage
                       src={profile?.avatar_url || undefined}
                       alt={profile?.full_name || "User"}
