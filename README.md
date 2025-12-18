@@ -165,6 +165,62 @@ O sistema utiliza a identidade visual da Ponto Forte com:
 - Service role key usado apenas em Edge Functions
 - Variáveis de ambiente nunca commitadas
 
+## 🔄 CI/CD - Integração Contínua
+
+O projeto utiliza GitHub Actions para garantir a qualidade do código antes de merge para produção.
+
+### Workflow Automático
+
+O workflow de CI (`.github/workflows/ci.yml`) é executado automaticamente em:
+
+- **Pull Requests** para a branch `main`
+- **Push** em qualquer branch (exceto `main`)
+
+### Etapas de Validação
+
+1. Checkout do código
+2. Setup do Node.js 18 e pnpm
+3. Cache inteligente de dependências
+4. Instalação de dependências
+5. Execução do linter (`pnpm lint`)
+6. Build da aplicação (`pnpm build`)
+7. Verificação dos artefatos gerados
+
+### Configurar Secrets no GitHub
+
+Para que o workflow funcione corretamente, configure os seguintes secrets no repositório:
+
+1. Acesse **Settings** → **Secrets and variables** → **Actions**
+2. Adicione os seguintes secrets:
+   - `VITE_SUPABASE_URL`: URL do seu projeto Supabase
+   - `VITE_SUPABASE_ANON_KEY`: Chave anônima do Supabase
+
+### Configurar Branch Protection
+
+Para garantir que código com erros não chegue à produção, configure proteção na branch `main`:
+
+1. Acesse **Settings** → **Branches** → **Add rule**
+2. Em "Branch name pattern", digite: `main`
+3. Ative as seguintes opções:
+   - ✅ **Require a pull request before merging**
+     - ✅ Require approvals (mínimo 1)
+   - ✅ **Require status checks to pass before merging**
+     - ✅ Require branches to be up to date before merging
+     - ✅ Adicione o check: `Build e Lint`
+   - ✅ **Do not allow bypassing the above settings** (incluir administradores)
+
+### Benefícios
+
+- ✅ Validação automática de código em todos os PRs
+- ✅ Detecção precoce de erros de build e linting
+- ✅ Garantia de qualidade antes do merge
+- ✅ Bloqueio automático de PRs com falhas
+- ✅ Histórico completo de builds no GitHub Actions
+
+### Monitoramento
+
+Acompanhe o status dos builds na aba **Actions** do repositório. Cada PR mostrará o status do CI diretamente na interface.
+
 ## 📧 Notificações
 
 O sistema envia emails transacionais via Resend quando:
